@@ -5,6 +5,7 @@ import Navbars from "./components/Navbars";
 import Dropdown from "./components/Dropdown";
 import Hero from "./components/Hero";
 import { SliderData } from "./data/SliderData";
+// import Form from "./components/Form";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +20,7 @@ function App() {
       <Navbars toggle={toggle}/>
       <Dropdown isOpen={isOpen} toggle={toggle}/>
       <Hero slides={SliderData}/>
+      {/* <Form/> */}
     </>
   );
 }
