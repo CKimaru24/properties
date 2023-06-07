@@ -5,7 +5,7 @@ import {menuData} from '../data/MenuData'
 import {Button} from './Button';
 import Bars from '../images/bars.svg';
 
-const Nav = styled.nav `
+const Nav = styled.nav`
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -13,8 +13,11 @@ const Nav = styled.nav `
   z-index: 100;
   position: fixed;
   width: 100%;
-//   background: red;
+  background: ${({ isDark }) => (isDark ? 'dark' : 'transparent')};
+  color: ${({ isDark }) => (isDark ? 'white' : 'inherit')};
+  background: ${({ isDark }) => (isDark ? '#333' : 'transparent')}; /* Set desired background color */
 `;
+
 
 const NavLink = css`
     color: #fff;
@@ -72,10 +75,10 @@ const NavBtn = styled.div`
     }
 `;
 
-const Navbars = ({toggle}) => {
+const Navbars = ({ toggle, isDark }) => {
   return (
-    <Nav>
-        <Logo to='/'>Smart Rentals</Logo>
+    <Nav isDark={isDark}>
+        <Logo to='/'><img src="../images/logo.png" alt="logo" style={{height: "120px"}} /></Logo>
         <MenuBars onClick={toggle}/>
         <NavMenu>
             {menuData.map((item, index) => (

@@ -1,27 +1,30 @@
-import React, {useState} from "react";
-import NavigationBar from "./components/Navbar";
-import GlobalStyle from "./globalStyles";
-import Navbars from "./components/Navbars";
-import Dropdown from "./components/Dropdown";
-import Hero from "./components/Hero";
-import { SliderData } from "./data/SliderData";
-// import Form from "./components/Form";
+import React, {useState} from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Form from './pages/Form'
+import Contact from './pages/Contact';
+import About from './pages/About';
+import Navbars from './components/Navbars';
 
 function App() {
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
     setIsOpen(!isOpen);
-  }
+  };
+
   return (
-    <>
-      <GlobalStyle/>
-      {/* <NavigationBar/> */}
-      <Navbars toggle={toggle}/>
-      <Dropdown isOpen={isOpen} toggle={toggle}/>
-      <Hero slides={SliderData}/>
-      {/* <Form/> */}
-    </>
+    <Router>
+      <Navbars isDark={true} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Form />}/>
+        <Route path="/contact" element={<Contact />}/>
+        <Route path="/about" element={<About  />} />
+
+      </Routes>
+    </Router>
   );
 }
 

@@ -12,22 +12,34 @@ const FormSignup = ({ submitForm }) => {
   return (
     <div className='form-content-right'>
       <form onSubmit={handleSubmit} className='form' noValidate>
-        {/* <h1><b><u>SIGNUP FORM</u></b></h1> */}
+        <h1><b><u>SIGNUP FORM</u></b></h1>
         <h1>
           Get started with us today! Create your account by filling out the
           information below.
         </h1>
         <div className='form-inputs'>
-          <label className='form-label'>Username</label>
+          <label className='form-label'>First Name</label>
           <input
             className='form-input'
             type='text'
-            name='username'
-            placeholder='Enter your username'
-            value={values.username}
+            name='fname'
+            placeholder='Enter your first name'
+            value={values.fname}
             onChange={handleChange}
           />
-          {errors.username && <p>{errors.username}</p>}
+          {errors.fname && <p>{errors.fname}</p>}
+        </div>
+        <div className='form-inputs'>
+          <label className='form-label'>Last Name</label>
+          <input
+            className='form-input'
+            type='text'
+            name='lname'
+            placeholder='Enter your last name'
+            value={values.lname}
+            onChange={handleChange}
+          />
+          {errors.lname && <p>{errors.lname}</p>}
         </div>
         <div className='form-inputs'>
           <label className='form-label'>Email</label>
@@ -40,6 +52,18 @@ const FormSignup = ({ submitForm }) => {
             onChange={handleChange}
           />
           {errors.email && <p>{errors.email}</p>}
+        </div>
+        <div className='form-inputs'>
+          <label className='form-label'>Phone Number</label>
+          <input
+            className='form-input'
+            type='phone'
+            name='phoneNumber'
+            placeholder='Enter your phone number'
+            value={values.phoneNumber}
+            onChange={handleChange}
+          />
+          {errors.phoneNumber && <p>{errors.phoneNumber}</p>}
         </div>
         <div className='form-inputs'>
           <label className='form-label'>Password</label>
