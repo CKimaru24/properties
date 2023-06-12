@@ -5,6 +5,8 @@ import Form from './pages/Form'
 import Contact from './pages/Contact';
 import About from './pages/About';
 import Navbars from './components/Navbars';
+import Landlord from './pages/Landlord';
+import LandlordDashboard from './pages/LandlordDashboard';
 
 function App() {
 
@@ -19,10 +21,11 @@ function App() {
       <Navbars isDark={true} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Form />}/>
+        <Route path="#" element={<Form />}/>
+        <Route path="/landlordSignup" element={<Landlord/>}/>
         <Route path="/contact" element={<Contact />}/>
         <Route path="/about" element={<About  />} />
-
+        <Route path="/landlorddashboard" element={<LandlordDashboard  />} />
       </Routes>
     </Router>
   );

@@ -176,12 +176,22 @@ const Contact = () => {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+
+  const [nameError, setNameError] = useState("");
+  const [messageError, setMessageError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   const resetForm = () => {
     setName('');
     setEmail('');
     setPhone('');
     setMessage('');
+    setNameError("");
+    setMessageError("");
+    setEmailError("");
+    setPhoneError("");
   };
 
   const sendEmail = (e) => {
@@ -202,6 +212,45 @@ const Contact = () => {
       phone,
       message,
     };
+
+    // Check if any required fields are empty
+    if (!name) {
+      setNameError("Please enter your name");
+    } else if (!/^[A-Za-z]+$/.test(name)) {
+      setNameError("Name should contain letters only");
+    } else {
+      setNameError("");
+    }
+
+    if (!message) {
+      setMessageError("Please enter your last name");
+    } else {
+      setMessageError("");
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+    setEmailError("Please enter an email address");
+    } else if (!emailRegex.test(email)) {
+    setEmailError("Invalid email format");
+    } else {
+    setEmailError("");
+    }
+ 
+    // Validate phone number format
+    const phoneRegex = /^0\d{9}$/; // Assuming a 10-digit phone number starting with 0
+
+    if (!phone) {
+      setPhoneError("Please enter a phone number");
+    } else if (!phoneRegex.test(phone)) {
+      setPhoneError("Invalid phone number format");
+      return;
+    } else {
+      setPhoneError("");
+    }
+
+    // setIsLoading(true);
 
     // Send the form data to the database
     fetch('/contacts', {
@@ -234,7 +283,10 @@ const Contact = () => {
       })
       .catch((error) => {
         console.log('Error sending form data:', error);
-      });
+      })
+      // .finally(() => {
+      //   setIsLoading(false);
+      // });
   };
 
   return (
@@ -252,6 +304,7 @@ const Contact = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+            {nameError && <ErrorMessage>{nameError}</ErrorMessage>}
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -260,6 +313,7 @@ const Contact = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {emailError && <ErrorMessage>{emailError}</ErrorMessage>}
             <label htmlFor="phone">Phone Number</label>
             <input
               type="tel"
@@ -268,6 +322,7 @@ const Contact = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
+            {phoneError && <ErrorMessage>{phoneError}</ErrorMessage>}
             <label htmlFor="message">Message</label>
             <textarea
               name="message"
@@ -275,7 +330,10 @@ const Contact = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <input type="submit" value="Send" />
+            {messageError && <ErrorMessage>{messageError}</ErrorMessage>}
+            <input type="submit" value="Send"  />
+            {/* disabled={isLoading}
+            {isLoading && <LoadingMessage>Loading...</LoadingMessage>} */}
           </form>
         </StyledContactForm>
       </CenteredContainer>
@@ -321,8 +379,8 @@ const StyledContactForm = styled.div`
       max-width: 100%;
       min-width: 100%;
       width: 100%;
-      max-height: 100px;
-      min-height: 100px;
+      max-height: 70px;
+      min-height: 70px;
       padding: 7px;
       outline: none;
       border-radius: 5px;
@@ -334,11 +392,11 @@ const StyledContactForm = styled.div`
     }
 
     label {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
 
     input[type="submit"] {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       cursor: pointer;
       background: rgb(249, 105, 14);
       color: white;
@@ -351,3 +409,12 @@ const SuccessMessage = styled.p`
   color: green;
   margin-top: 1rem;
 `;
+
+const ErrorMessage = styled.p`
+  color: red;
+  // margin-top: 0.1rem;
+`;
+
+// const LoadingMessage = styled.p`
+//   margin-bottom: 16px;
+// `;

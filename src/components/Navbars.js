@@ -88,7 +88,7 @@ const Navbars = ({ toggle, isDark }) => {
             ))}
         </NavMenu>
         <NavBtn>
-            <Button to='/signup' primary='true'>Signup</Button>
+            <Button to='/landlordSignup' primary='true'>Signup</Button>
         </NavBtn>
     </Nav>
     
