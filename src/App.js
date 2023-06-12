@@ -18,7 +18,7 @@ function App() {
 
   return (
     <Router>
-      <Navbars isDark={true} />
+      {/* <Navbars isDark={true} /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="#" element={<Form />}/>

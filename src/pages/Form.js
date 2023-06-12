@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../components/Form.css';
 import FormSignup from '../components/FormSignup';
 import FormSuccess from '../components/FormSuccess';
+import Navbars from '../components/Navbars';
 
 const Form = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -11,6 +12,7 @@ const Form = () => {
   }
   return (
     <>
+      <Navbars isDark={true} />
       <div className='form-container'>
         <span className='close-btn'>×</span>
         <div className='form-content-left'>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
+import Navbars from '../components/Navbars';
 
 import house1 from '../images/house-1.jpg';
 import house3 from '../images/house-3.jpg';
@@ -82,6 +83,7 @@ const About = () => {
 
   return (
     <>
+      <Navbars isDark={true} />
       <StyledAbout>
         <h1>About Us</h1>
         <p>Welcome to SmartRentals! We offer the best rental properties for your next stay. Whether you are a tenant looking for a comfortable and convenient place to live, or a landlord seeking reliable and responsible tenants, SmartRentals has you covered. Our mission is to provide a seamless and enjoyable rental experience for both tenants and landlords. We strive to match tenants with their ideal rental properties and assist landlords in finding trustworthy tenants, making the rental process efficient and hassle-free for all parties involved and also a platform for them to manage their properties.</p>

@@ -262,6 +262,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
+import Navbars from '../components/Navbars';
 
 const Landlord = ({ history }) => {
   const [fname, setFname] = useState("");
@@ -417,6 +418,7 @@ const Landlord = ({ history }) => {
     }
     return (
         <>
+        <Navbars isDark={true} />
         <CenteredContainer>
             <StyledSignupForm>
             {submitSuccess && <SuccessMessage>Signup successful!</SuccessMessage>}

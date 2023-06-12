@@ -10,7 +10,7 @@ const Home = ({toggle, isOpen}) => {
   return (
     <>
       <GlobalStyle />
-      <Navbars toggle={toggle} />
+      <Navbars isDark={true} toggle={toggle} />
       <Dropdown isOpen={isOpen} toggle={toggle} />
       <Hero slides={SliderData} />
       

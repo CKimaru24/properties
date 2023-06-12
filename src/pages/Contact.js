@@ -166,6 +166,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { init, sendForm } from 'emailjs-com';
 import Footer from '../components/Footer';
+import Navbars from '../components/Navbars';
 
 // Initialize emailjs with your user ID
 init('paFAZDWJSFK3nrKx7');
@@ -291,6 +292,7 @@ const Contact = () => {
 
   return (
     <>
+      <Navbars isDark={true} />
       <CenteredContainer>
         <StyledContactForm>
           {submitSuccess && <SuccessMessage>Form submitted successfully!</SuccessMessage>}
