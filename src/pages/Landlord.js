@@ -270,7 +270,7 @@ const Landlord = ({ history }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const [fnameError, setFnameError] = useState("");
@@ -376,7 +376,7 @@ const Landlord = ({ history }) => {
             } else {
                 setEmailError("");
                 // Submit the signup data to the server
-                fetch("/landlords", {
+                fetch(`/landlords`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -428,7 +428,7 @@ const Landlord = ({ history }) => {
                 <label>First Name</label>
                 <input
                     type="text"
-                    name="fname"
+                    // name="fname"
                     id="fname"
                     value={fname}
                     onChange={(e) => setFname(e.target.value)}
@@ -440,7 +440,8 @@ const Landlord = ({ history }) => {
                 <label>Last Name</label>
                 <input
                     type="text"
-                    name="lname"
+                    // name="lname"
+                    id="lname"
                     value={lname}
                     onChange={(e) => setLname(e.target.value)}
                 />
@@ -451,7 +452,8 @@ const Landlord = ({ history }) => {
                 <label>Email</label>
                 <input
                     type="email"
-                    name="email"
+                    // name="email"
+                    id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
@@ -462,7 +464,8 @@ const Landlord = ({ history }) => {
                 <label>Phone Number</label>
                 <input
                     type="tel"
-                    name="phone"
+                    // name="phone"
+                    id="phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                 />
@@ -473,7 +476,8 @@ const Landlord = ({ history }) => {
                 <label>Password</label>
                 <input
                     type="password"
-                    name="password"
+                    // name="password"
+                    id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
@@ -484,7 +488,7 @@ const Landlord = ({ history }) => {
                 <label>Confirm Password</label>
                 <input
                     type="password"
-                    name="password_confirmation"
+                    // name="password_confirmation"
                     id="password_confirmation"
                     value={passwordConfirmation}
                     onChange={(e) => setPasswordConfirmation(e.target.value)}
