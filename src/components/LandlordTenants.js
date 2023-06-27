@@ -8,8 +8,8 @@ import styled, { css } from 'styled-components/macro';
 import { IoMdArrowBack, IoMdArrowForward, IoMdArrowRoundForward } from 'react-icons/io';
 import { useNavigate } from "react-router-dom";
 
-const Properties = () => {
-    const [properties, setProperties] = useState([]);
+const LandlordTenants = () => {
+    const [properties, setTenants] = useState([]);
 
     const navigate = useNavigate();
 
@@ -20,19 +20,19 @@ const Properties = () => {
   
     // Simulated fetch from database
     useEffect(() => {
-      // Fetch properties data from the database here
+      // Fetch tenants data from the database here
       // Example:
-      const fetchProperties = async () => {
+      const fetchTenants = async () => {
         try {
-          const response = await fetch("/properties");
+          const response = await fetch("/tenants");
           const data = await response.json();
-          setProperties(data);
+          setTenants(data);
         } catch (error) {
-          console.error("Error fetching properties:", error);
+          console.error("Error fetching tenants:", error);
         }
       };
   
-      fetchProperties();
+      fetchTenants();
     }, []);
 
     const [listings, setListings] = useState([]);
@@ -97,13 +97,13 @@ const Properties = () => {
       <Container>
         
         <Header>
-          <NavLink to="/addlisting">
+          <NavLink to="/addTenants">
             <AiOutlinePlus />
-            Add Listing
+            Add Tenant
           </NavLink>
           <NavLink to="/listings">
             <AiOutlineEye />
-            View All Listings
+            View All Tenants
           </NavLink>
         </Header>
         <Body>
@@ -378,4 +378,4 @@ const BottomRightButton = styled.button`
   cursor: pointer;
 `;
 
-export default Properties;
+export default LandlordTenants;

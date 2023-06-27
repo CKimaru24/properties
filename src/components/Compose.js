@@ -127,14 +127,73 @@ const Compose = () => {
     navigate("/mail");
   };
 
+  const handleComposeClick = () => {
+    navigate("/compose");
+  };
+
+  const handleSentClick = () => {
+    navigate("/sentEmails");
+  };
+
+  const handleInboxClick = () => {
+    navigate("/inbox");
+  };
+
+  const handleDraftClick = () => {
+    navigate("/drafts");
+  };
+
+
+
+  const handleDraft = () => {
+    const draftData = {
+      email,
+      cc,
+      bcc,
+      subject,
+      message,
+      attachments
+    };
+  
+    // Send an HTTP request to save the draft data to the "/draft" endpoint
+    fetch('/drafts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(draftData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Draft saved successfully:', data);
+      // Optionally, you can perform any additional actions after saving the draft
+      // such as showing a success message to the user or redirecting them to a different page.
+    })
+    .catch(error => {
+      console.log('Error saving draft:', error);
+      // Handle any error that occurred during the saving of the draft
+    });
+  };
+  
+
   return (
     <ComposeContainer>
+      <MailHeader>
+        <MailButton onClick={handleInboxClick}>Inbox</MailButton>
+        <MailButton onClick={handleSentClick}>Sent</MailButton>
+        <ComposeButton onClick={handleComposeClick}>
+            Compose
+        </ComposeButton>
+        <MailButton onClick={handleDraftClick}>Draft</MailButton>
+      </MailHeader>
+
       <ComposeHeader>
         <ComposeTitle>Compose</ComposeTitle>
         <CloseButton to="/mail">
           <MdClose />
         </CloseButton>
       </ComposeHeader>
+
       <ComposeForm>
         <FormField>
           <InputLabel>To</InputLabel>
@@ -210,6 +269,9 @@ const Compose = () => {
           <MdSend />
           Send
         </SendButton>
+        <DraftButton onClick={handleDraft}>
+          Save as Draft
+        </DraftButton>
         <BottomRightButton onClick={handleBackClick}>
             <FiArrowLeft />
             Back
@@ -220,13 +282,13 @@ const Compose = () => {
 };
 
 const ComposeContainer = styled.div`
-  width: 500px;
+  width: 100%;
   background-color: #fff;
   border-radius: 5px;
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  margin-top: 20px;
+  // margin: 0 auto;
+  margin-top: 0px;
 `;
 
 const ComposeHeader = styled.div`
@@ -234,6 +296,7 @@ const ComposeHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  margin-top: 10px;
 `;
 
 const ComposeTitle = styled.h2`
@@ -320,8 +383,25 @@ const SendButton = styled.button`
   }
 `;
 
+const DraftButton = styled.button`
+  background-color: #1a73e8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 258px;
+
+  &:hover {
+    background-color: #0c5fc4;
+  }
+`;
+
 const BottomRightButton = styled.button`
   position: fixed;
+  // margin-left: 50%
   bottom: 20px;
   right: 20px;
   display: flex;
@@ -340,4 +420,39 @@ const ErrorMessage = styled.p`
   color: red;
   margin-top: 0.1rem;
 `;
+
+const MailHeader = styled.div`
+  /* Add styles for the mail header */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // padding: 16px;
+  // background-color: #f2f2f2;
+`;
+
+const ComposeButton = styled.button`
+  /* Add styles for the compose button */
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+`;
+
+const MailButton = styled.button`
+  /* Add styles for the mail buttons (Inbox, Sent, etc.) */
+  padding: 8px 16px;
+//   background-color: transparent;
+    background-color: #3498dc;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+`;
+
+
+
 export default Compose;

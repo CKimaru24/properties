@@ -202,31 +202,46 @@ function Mail() {
         // Implement compose email logic here
     };
 
-    const handleComposeClick = () => {
-        navigate("/compose");
-      };
+    // const handleComposeClick = () => {
+    //     navigate("/compose");
+    //   };
+    
+      const handleComposeClick = () => {
+        window.location.href = "http://localhost:4000";
+      }; 
+
+      // const handleSentClick = () => {
+      //   navigate("/sentEmails");
+      // };
 
       const handleSentClick = () => {
-        navigate("/sentEmails");
-      };
-
+        window.location.href = "http://localhost:4000/sent";
+      }; 
+    
       const handleInboxClick = () => {
-        navigate("/inbox");
-      };
+        window.location.href = "http://localhost:4000/inbox";
+      };  
+      
+      const handleDraftClick = () => {
+        window.location.href = "http://localhost:4000/draft";
+      }; 
 
   // ... Rest of the component code
 
   return (
     <MailContainer>
       <MailHeader>
-        <MailIcon>
-          <span>{unreadCount}</span>
-        </MailIcon>
+        <MailButton onClick={handleInboxClick}>Inbox</MailButton>
+        <MailButton onClick={handleSentClick}>Sent</MailButton>
         <ComposeButton onClick={handleComposeClick}>
             Compose
         </ComposeButton>
-        <MailButton onClick={handleInboxClick}>Inbox</MailButton>
-        <MailButton onClick={handleSentClick}>Sent</MailButton>
+        <MailButton onClick={handleDraftClick}>Draft</MailButton>
+        {/* <MailIcon>
+          <span>{unreadCount}</span>
+        </MailIcon> */}
+       
+        
       </MailHeader>
       <EmailList>
         {receivedEmails.map((email) => (

@@ -328,7 +328,7 @@ const Sidenav = () => {
             <FaComments />
             Chat
           </NavLink>
-          <NavLink>
+          <NavLink to="/mail">
             <AiOutlineMail />
             Email
           </NavLink>

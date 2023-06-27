@@ -264,7 +264,7 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import Navbars from '../components/Navbars';
 
-const Landlord = ({ history }) => {
+const Landlord = ({ setLandlord }) => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
@@ -367,55 +367,108 @@ const Landlord = ({ history }) => {
     // TODO: Check for unique email address
     // You can make a request to the server to check if the email address is already used
     // For example, using the fetch() function or a library like axios
-    fetch(`/landlords`)
-        .then((response) => response.json())
-        .then((data) => {
-            const existingEmails = data.map((entry) => entry.email);
-            if (existingEmails.includes(email)) {
-            setEmailError("Email address is already in use");
-            } else {
-                setEmailError("");
-                // Submit the signup data to the server
-                fetch(`/landlords`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        fname,
-                        lname,
-                        email,
-                        phone,
-                        password,
-                        password_confirmation: passwordConfirmation,
-                    }),
-                })
-                .then((response) => {
-                    if (response.ok) {
-                        console.log("message sent");
-                        resetForm();
-                        setSubmitSuccess(true);
-                        // history.push("/LandlordDashboard")
+    // fetch(`/signup`)
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         const existingEmails = data.map((entry) => entry.email);
+    //         if (existingEmails.includes(email)) {
+    //         setEmailError("Email address is already in use");
+    //         } else {
+    //             setEmailError("");
+    //             // Submit the signup data to the server
+    //             fetch(`/signup`, {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({
+    //                     fname,
+    //                     lname,
+    //                     email,
+    //                     phone,
+    //                     password,
+    //                     password_confirmation: passwordConfirmation,
+    //                 }),
+    //             })
+    //             .then((response) => {
+    //                 if (response.ok) {
+    //                     console.log("message sent");
+    //                     response.json().then((landlord) => setLandlord(landlord));
+    //                     resetForm();
+    //                     setSubmitSuccess(true);
+    //                     // history.push("/LandlordDashboard")
                         
-                    } else {
-                        console.log("Failed to send message");
-                    }
+    //                 } else {
+    //                     console.log("Failed to send message");
+    //                 }
                     
-                })
-                .catch((error) => {
-                    console.log(error.message);
-                });
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error.message);
+    //             });
                 
-            }
-        })
-        .catch((error) => {
-            console.log(error.message);
-        });
-    };
-    if (submitSuccess) {
-      // return <Redirect to="/LandlordDashboard" />;
-      navigate("/landlorddashboard");
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         console.log(error.message);
+    //     });
+    fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fname,
+        lname,
+        email,
+        phone,
+        password,
+        password_confirmation: passwordConfirmation,
+      }),
+    })
+      .then(async (response) => {
+        if (response.ok) {
+          // Extract the token from the response
+          const data = await response.json();
+          console.log("Response Data:", data);
+          if (data.token) {
+            const token = data.token;
+
+            // Store the token in localStorage
+            localStorage.setItem("token", token);
+            console.log("Token:", token);
+
+            // Decode the token (if needed)
+            const decodedToken = decodeToken(token);
+            console.log("Decoded Token:", decodedToken);
+
+            // Redirect the landlord to the "/landlorddashboard" page
+            navigate("/landlorddashboard");
+          } else {
+            throw new Error("Token not received");
+          }
+        } else {
+          throw new Error("Error during signup");
+        }
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+    
+    // Function to decode the token
+    function decodeToken(token) {
+      // Extract the payload from the token
+      const payloadBase64 = token.split(".")[1];
+      const payloadDecoded = atob(payloadBase64);
+    
+      // Parse the decoded payload as JSON
+      const payload = JSON.parse(payloadDecoded);
+    
+      return payload;
     }
+    
+    };
+    
     return (
         <>
         <Navbars isDark={true} />

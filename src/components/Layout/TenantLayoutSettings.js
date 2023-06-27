@@ -1,131 +1,92 @@
-// const LayoutSettings = {
-//     leftSidebar: {
-//       show: true,
-//       mode: 'full', // full, close, compact, mobile,
-//       theme: 'slateDark1', // View all valid theme colors inside MatxTheme/themeColors.js
-//       bgImgURL: '/images/sidebar/sidebar-bg-dark.jpg'
-//     },
-//     topbar: {
-//       show: true,
-//       fixed: true,
-//       theme: 'whiteBlue' // View all valid theme colors inside MatxTheme/themeColors.js
-//     }
-//   };
-  
-//   export default LayoutSettings;
-
 import React from "react";
 import styled from "styled-components";
 import {
-  FaHome,
-  FaUserFriends,
-  FaBuilding,
-  FaMoneyBill,
+  FaListAlt,
   FaComments,
-  FaChartBar,
-  FaCheckSquare,
-  FaCalendarAlt,
-  FaStickyNote,
+  FaTools,
+  FaBuilding,
 } from "react-icons/fa";
-import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import { AiOutlineBell } from "react-icons/ai";
+import { BiBuildingHouse, BiBarChartAlt, BiCalendar } from "react-icons/bi";
+import { RiCheckLine } from "react-icons/ri";
+import { IoDocumentsSharp, IoDocuments} from "react-icons/io5"
+
 import Topbar from "./Topbar";
 import { Link } from "react-router-dom";
 import { MdHome } from "react-icons/md";
 
 
 
-const LayoutSettings = ({children}) => {
+const TenantLayoutSettings = ({children}) => {
   return (
     <>
     <Container>
       <SidenavContainer>
-        {/* <img src="/images/logos.png" alt="Logo" style={{height: "200px"}}/> */}
         <h1 style={{marginBottom: "20px", fontSize: "22px", color: "purple"}}><MdHome /> SmartRentals</h1>
-        {/* <LandlordName>Collins's Dashboard</LandlordName> */}
         <Section>
-          <SectionTitle>MANAGEMENT</SectionTitle>
-          <NavLink to="/properties">
-            <FaBuilding />
-            Properties
-          </NavLink>
-          <NavLink to="/landlordTenants">
-            <FaUserFriends />
-            Tenants
-          </NavLink>
+          <SectionTitle>LIST</SectionTitle>
           <NavLink>
-            <FaBuilding />
-            Apartments Managers
-          </NavLink>
-          <NavLink>
-            <FaUserFriends />
-            Agents
+            <FaListAlt />
+            Tenant List
           </NavLink>
         </Section>
         <Section>
           <SectionTitle>COMMUNICATIONS</SectionTitle>
           <NavLink>
             <FaComments />
-            Chat
-          </NavLink>
-          <NavLink to="http://localhost:4000/inbox">
-            <AiOutlineMail />
-            Email
+            Messages
           </NavLink>
           <NavLink>
-            <AiOutlinePhone />
-            Call
+            <AiOutlineBell />
+            Notifications
           </NavLink>
         </Section>
         <Section>
-          <SectionTitle>FINANCIAL RECORDS</SectionTitle>
+          <SectionTitle>DOCUMENTS</SectionTitle>
           <NavLink>
-            <FaMoneyBill />
-            Expenses
+            <IoDocumentsSharp />
+            Lease Agreements
           </NavLink>
           <NavLink>
-            <FaMoneyBill />
-            Payments (from tenants)
-          </NavLink>
-          <NavLink>
-            <FaMoneyBill />
-            Dues (from tenants)
-          </NavLink>
-          <NavLink>
-            <FaChartBar />
-            Bank Report
-          </NavLink>
-          <NavLink>
-            <FaChartBar />
-            Reports
-          </NavLink>
-          <NavLink>
-            <FaChartBar />
-            Financial Progress
+            <IoDocuments />
+            Other Documents
           </NavLink>
         </Section>
         <Section>
-          <SectionTitle>UTILITIES</SectionTitle>
+          <SectionTitle>TENANT REQUESTS</SectionTitle>
           <NavLink>
-            <FaCheckSquare />
-            To-Do
+            <FaTools />
+            Maintenance Requests
+          </NavLink>
+        </Section>
+        <Section>
+          <SectionTitle>TENANT STATUS</SectionTitle>
+          <NavLink>
+            <RiCheckLine />
+            Active Tenants
           </NavLink>
           <NavLink>
-            <FaCalendarAlt />
-            Calendar
+            <FaBuilding />
+            Vacant Units
           </NavLink>
           <NavLink>
-            <FaStickyNote />
-            Notes
+            <BiCalendar />
+            Lease Expirations
+          </NavLink>
+        </Section>
+        <Section>
+          <SectionTitle>REPORTS</SectionTitle>
+          <NavLink>
+            <BiBarChartAlt />
+            Rent Collection Report
+          </NavLink>
+          <NavLink>
+            <BiBuildingHouse />
+            Occupancy Report
           </NavLink>
         </Section>
       </SidenavContainer>
       <ContentContainer>
-        {/* Topbar */}
-        {/* <TopbarContainer> */}
-          {/* Your Topbar component code here */}
-          {/* <Topbar /> */}
-        {/* </TopbarContainer> */}
-        {/* Properties component */}
         <LinksContainer>
           {children}
         </LinksContainer>
@@ -205,4 +166,4 @@ const LinksContainer = styled.div`
   background-color: #f1f1f1;
 `;
 
-export default LayoutSettings;
+export default TenantLayoutSettings;

@@ -4,15 +4,17 @@ import Dropdown from '../components/Dropdown';
 import Hero from '../components/Hero';
 import { SliderData } from '../data/SliderData';
 import GlobalStyle from '../globalStyles';
+import Sliding from '../components/Sliding';
 
-const Home = ({toggle, isOpen}) => {
+const Home = ({toggle, isOpen, landlords, setLandlord}) => {
 
   return (
     <>
       <GlobalStyle />
-      <Navbars isDark={true} toggle={toggle} />
+      <Navbars isDark={true} toggle={toggle} landlords={landlords} setLandlord={setLandlord} />
       <Dropdown isOpen={isOpen} toggle={toggle} />
-      <Hero slides={SliderData} />
+      <Sliding />
+      {/* <Hero slides={SliderData} /> */}
       
     </>
   );

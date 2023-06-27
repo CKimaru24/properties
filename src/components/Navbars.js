@@ -75,7 +75,15 @@ const NavBtn = styled.div`
     }
 `;
 
-const Navbars = ({ toggle, isDark }) => {
+const Navbars = ({ toggle, isDark, landlord, setLandlord }) => {
+
+    function handleLogoutClick() {
+        fetch("/logout", { method: "DELETE" }).then((response) => {
+          if (response.ok) {
+            setLandlord(null);
+          }
+        });
+      }
   return (
     <Nav isDark={isDark}>
         <Logo to='/'><img src="../images/logo.png" alt="logo" style={{height: "120px"}} /></Logo>
@@ -87,9 +95,18 @@ const Navbars = ({ toggle, isDark }) => {
                 </NavMenuLinks>
             ))}
         </NavMenu>
+        {landlord ? (
         <NavBtn>
+            <Button onClick={handleLogoutClick} primary='true' style={{marginRight: "20px"}}>Logout</Button>
+        </NavBtn>
+        ) : (
+        <NavBtn>
+            <Button to='/landlordLogin' primary='true' style={{marginRight: "20px"}}>Login</Button>
             <Button to='/landlordSignup' primary='true'>Signup</Button>
         </NavBtn>
+        )
+        }
+        
     </Nav>
     
   )

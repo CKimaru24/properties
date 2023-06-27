@@ -54,6 +54,11 @@ const SentMail = () => {
     navigate("/sentEmails");
   };
 
+  const handleReply = () => {
+    // Navigate back to the Mail component
+    navigate("/compose");
+  };
+
   // Parse attachments string into an array of objects
   let parsedAttachments = [];
   try {
@@ -115,8 +120,11 @@ const SentMail = () => {
                 ))}
             </EmailAttachments>
         )}
-        <BackButton onClick={handleBack}>
+        <BackButton onClick={handleReply} style={{marginRight: "370px"}}>
           <MdSend />
+          Reply
+        </BackButton>
+        <BackButton onClick={handleBack}>
           Back
         </BackButton>
       </EmailContent>
