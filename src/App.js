@@ -34,6 +34,11 @@ import ThemeProvider from './components/context/ThemeProvider';
 import TenantLayoutSettings from './components/Layout/TenantLayoutSettings';
 import LandlordTenants from './components/LandlordTenants';
 import AddTenants from './components/AddTenants';
+import LeaseAgreement from './components/LeaseAgreement';
+import OtherDocuments from './components/OtherDocuments';
+import MaintenanceRequest from './components/MaintenanceRequest';
+import ApartmentsManagers from './components/ApartmentsManagers';
+import AddManager from './components/AddManager';
 
 
 function App() {
@@ -86,6 +91,8 @@ function App() {
         <Route path="/addlisting" element={<LayoutSettings><AddListing /></LayoutSettings>} />
         <Route path="/listings" element={<LayoutSettings><Listings /></LayoutSettings>} />
         <Route path="/listing/:id" element={<LayoutSettings><Listing /></LayoutSettings>}/>
+        <Route path="/addManager" element={<LayoutSettings><AddManager /></LayoutSettings>} />
+        <Route path="/apartmentsManagers" element={<LayoutSettings><ApartmentsManagers /></LayoutSettings>} />
         <Route path="/booking" element={<LayoutSettings><Booking /></LayoutSettings>}/>
         <Route path="/sliding" element={<LayoutSettings><Sliding /> </LayoutSettings> } />
         <Route path="/logout" element={<Logout />} />
@@ -93,6 +100,9 @@ function App() {
         <Route path="/profile" element={<LayoutSettings><Profile /></LayoutSettings>} />
         <Route path="/landlordTenants" element={<TenantLayoutSettings><LandlordTenants/></TenantLayoutSettings>} />
         <Route path="/addTenants" element={<TenantLayoutSettings><AddTenants /></TenantLayoutSettings>} />
+        <Route path="/leaseAgreement" element={<TenantLayoutSettings><LeaseAgreement /></TenantLayoutSettings>} />
+        <Route path="/otherDocuments" element={<TenantLayoutSettings><OtherDocuments /></TenantLayoutSettings>} />
+        <Route path="/maintenaceRequest" element={<TenantLayoutSettings><MaintenanceRequest /></TenantLayoutSettings>} />
         {/* <Route path="/change" element={<LayoutSettings><Change /></LayoutSettings>} /> */}
       </Routes>
       </ThemeProvider>

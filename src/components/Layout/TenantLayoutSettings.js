@@ -43,18 +43,18 @@ const TenantLayoutSettings = ({children}) => {
         </Section>
         <Section>
           <SectionTitle>DOCUMENTS</SectionTitle>
-          <NavLink>
+          <NavLink to="/leaseAgreement">
             <IoDocumentsSharp />
             Lease Agreements
           </NavLink>
-          <NavLink>
+          <NavLink to="/otherDocuments">
             <IoDocuments />
             Other Documents
           </NavLink>
         </Section>
         <Section>
           <SectionTitle>TENANT REQUESTS</SectionTitle>
-          <NavLink>
+          <NavLink to="/maintenaceRequest">
             <FaTools />
             Maintenance Requests
           </NavLink>

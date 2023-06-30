@@ -54,6 +54,7 @@ const AttachmentItem = styled.li`
   font-size: 14px;
   color: #777;
 `;
+
 const AddListing = () => {
   const [listingType, setListingType] = useState('');
   const [town, setTown] = useState('');

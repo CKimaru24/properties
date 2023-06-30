@@ -4,33 +4,109 @@ import styled from "styled-components";
 const AddTenant = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [isSelected, setIsSelected] = useState(false);
+
 //   const preset_key = "profiles";
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    dateOfBirth: "",
-    gender: "",
-    KraPin: "",
-    nationality: "",
-    phoneNumber: "",
-    emailAddress: "",
-    currentAddress: "",
-    emergencyContact: "",
-    idType: "",
-    idNumber: "",
-    idExpiryDate: "",
-    idAttachment: "",
-    employer: "",
-    jobTitle: "",
-    monthlyIncome: "",
-    personalReference: "",
-    previousLandlord: "",
-    leaseStartDate: "",
-    leaseEndDate: "",
-    rentAmount: "",
-    securityDeposit: "",
-    additionalNotes: ""
-  });
+    const [fullname, setFullname] = useState('');
+    const [dob, setDob] = useState('');
+    const [gender, setGender] = useState('');
+    const [Krapin, setKrapin] = useState('');
+    const [nationality, setNationality] = useState('');
+    const [phonenumber, setPhonenumber] = useState('');
+    const [emailaddress, setEmailaddress] = useState('');
+    const [currentaddress, setCurrentaddress] = useState('');
+    const [emergencycontact, setemergencycontact] = useState('');
+    const [idtype, setIdtype] = useState('');
+    const [idnumber, setIdnumber] = useState('');
+    const [idexpirydate, setIdexpirydate] = useState('');
+    const [idattachment, setIdattachment] = useState(null);
+    const [employer, setEmployer] = useState('');
+    const [jobtitle, setJobtitle] = useState('');
+    const [monthlyincome, setMonthlyincome] = useState('');
+    const [personalreference, setPersonalreference] = useState('');
+    const [previouslandlord, setPreviouslandlord] = useState('');
+    const [leasestartdate, setLeasestartdate] = useState('');
+    const [leaseenddate, setLeaseenddate] = useState('');
+    const [rentamount, setRentamount] = useState('');
+    const [securitydeposit, setSecuritydeposit] = useState('');
+    const [additionalnotes, setAdditionalnotes] = useState('');
+
+  const handleFullname = (e) => {
+    setFullname(e.target.value);
+  };
+
+  const handleDob = (e) => {
+    setDob(e.target.value);
+  };
+  const handleGender = (e) => {
+    setGender(e.target.value);
+  };
+  const handleKrapin = (e) => {
+    setKrapin(e.target.value);
+  };
+  const handleNationality = (e) => {
+    setNationality(e.target.value);
+  };
+  const handlePhonenumber = (e) => {
+    setPhonenumber(e.target.value);
+  };
+  const handleEmailaddress = (e) => {
+    setEmailaddress(e.target.value);
+  };
+  const handleCurrentaddress = (e) => {
+    setCurrentaddress(e.target.value);
+  };
+  const handleEmergencycontact = (e) => {
+    setemergencycontact(e.target.value);
+  };
+  const handleIdtype = (e) => {
+    setIdtype(e.target.value);
+  };
+  const handleIdnumber = (e) => {
+    setIdnumber(e.target.value);
+  };
+  const handleIdexpirydate = (e) => {
+    setIdexpirydate(e.target.value);
+  };
+  const handleEmployer = (e) => {
+    setEmployer(e.target.value);
+  };
+  const handleJobtitle = (e) => {
+    setJobtitle(e.target.value);
+  };
+  const handleMonthlyincome = (e) => {
+    setMonthlyincome(e.target.value);
+  };
+  const handlePersonalreference = (e) => {
+    setPersonalreference(e.target.value);
+  };
+  const handlePreviouslandlord = (e) => {
+    setPreviouslandlord(e.target.value);
+  };
+  const handleLeasestartdate = (e) => {
+    setLeasestartdate(e.target.value);
+  };
+  const handleLeaseenddate = (e) => {
+    setLeaseenddate(e.target.value);
+  };
+  const handleRentamount = (e) => {
+    setRentamount(e.target.value);
+  };
+  const handleSecuritydeposit = (e) => {
+    setSecuritydeposit(e.target.value);
+  };
+  const handleAdditionalnotes = (e) => {
+    setAdditionalnotes(e.target.value);
+  };
+  const handleIdattachment = (e) => {
+    setIdattachment(e.target.value);
+  };
+  const handleAttachment = (e) => {
+    const selectedFile = e.target.files[0];
+    setIdattachment(selectedFile);
+    setIsSelected(true);
+  };
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -39,28 +115,66 @@ const AddTenant = () => {
   const prevPage = () => {
     setCurrentPage(currentPage - 1);
   };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleFile = (e) => {
-    const file = e.target.files[0];
-    setFormData((prevState) => ({
-      ...prevState,
-      idAttachment: file
-    }));
-  };
-
+    
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform form submission or data processing here
-    console.log(formData);
+
+    const tenantData = {
+        fullname,
+        dob,
+        gender,
+        Krapin,
+        nationality,
+        phonenumber,
+        emailaddress,
+        currentaddress,
+        emergencycontact,
+        idtype,
+        idnumber,
+        idexpirydate,
+        idattachment,
+        employer,
+        jobtitle,
+        monthlyincome,
+        personalreference,
+        previouslandlord,
+        leasestartdate,
+        leaseenddate,
+        rentamount,
+        securitydeposit,
+        additionalnotes,
+    };
+    
+    fetch('/tenants', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(tenantData)
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Tenant data submitted successfully');
+          // Reset the form or perform any other actions
+        } else {
+          console.error('Failed to submit tenant data');
+          // Handle the error
+        }
+      })
+      .catch(error => {
+        console.error('Error occurred while submitting tenant data', error);
+        // Handle the error
+      });
   };
+
+//   const handleFormSubmit = (e) => {
+//     e.preventDefault();
+//     // Handle the form submission here based on the current page or any other conditions
+//     if (currentPage === 7) {
+//       handleSubmit();
+//     }
+//   };
 
   const renderForm = () => {
     switch (currentPage) {
@@ -69,23 +183,23 @@ const AddTenant = () => {
             <PageContainer>
             <PageTitle>Personal Information</PageTitle>
             <FormField>
-              <label htmlFor="fullName">Full Name:</label>
+              <label htmlFor="fullname">Full Name:</label>
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
+                id="fullname"
+                name="fullname"
+                value={fullname}
+                onChange={handleFullname}
               />
             </FormField>
             <FormField>
-              <label htmlFor="dateOfBirth">Date of Birth:</label>
+              <label htmlFor="dob">Date of Birth:</label>
               <input
                 type="date"
-                id="dateOfBirth"
-                name="dateOfBirth"
-                value={formData.dateOfBirth}
-                onChange={handleChange}
+                id="dob"
+                name="dob"
+                value={dob}
+                onChange={handleDob}
               />
             </FormField>
             <FormField>
@@ -93,8 +207,8 @@ const AddTenant = () => {
               <select
                 id="gender"
                 name="gender"
-                value={formData.gender}
-                onChange={handleChange}
+                value={gender}
+                onChange={handleGender}
               >
                 <option value="">Select</option>
                 <option value="male">Male</option>
@@ -103,13 +217,13 @@ const AddTenant = () => {
               </select>
             </FormField>
             <FormField>
-              <label htmlFor="KraPin">Social Security Number/ KRA PIN: </label>
+              <label htmlFor="Krapin">Social Security Number/ KRA PIN: </label>
               <input
                 type="text"
-                id="KraPin"
-                name="KraPin"
-                value={formData.KraPin}
-                onChange={handleChange}
+                id="Krapin"
+                name="Krapin"
+                value={Krapin}
+                onChange={handleKrapin}
               />
             </FormField>
             <FormField>
@@ -118,8 +232,8 @@ const AddTenant = () => {
                 type="text"
                 id="nationality"
                 name="nationality"
-                value={formData.nationality}
-                onChange={handleChange}
+                value={nationality}
+                onChange={handleNationality}
               />
             </FormField>
           </PageContainer>
@@ -129,43 +243,43 @@ const AddTenant = () => {
             <PageContainer>
             <PageTitle>Contact Information</PageTitle>
             <FormField>
-              <label htmlFor="phoneNumber">Phone Number:</label>
+              <label htmlFor="phonenumber">Phone Number:</label>
               <input
                 type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
+                id="phonenumber"
+                name="phonenumber"
+                value={phonenumber}
+                onChange={handlePhonenumber}
               />
             </FormField>
             <FormField>
-              <label htmlFor="emailAddress">Email Address:</label>
+              <label htmlFor="emailaddress">Email Address:</label>
               <input
                 type="email"
-                id="emailAddress"
-                name="emailAddress"
-                value={formData.emailAddress}
-                onChange={handleChange}
+                id="emailaddress"
+                name="emailaddress"
+                value={emailaddress}
+                onChange={handleEmailaddress}
               />
             </FormField>
             <FormField>
-              <label htmlFor="currentAddress">Current Address:</label>
+              <label htmlFor="currentaddress">Current Address:</label>
               <input
                 type="text"
-                id="currentAddress"
-                name="currentAddress"
-                value={formData.currentAddress}
-                onChange={handleChange}
+                id="currentaddress"
+                name="currentaddress"
+                value={currentaddress}
+                onChange={handleCurrentaddress}
               />
             </FormField>
             <FormField>
-              <label htmlFor="emergencyContact">Emergency Contact:</label>
+              <label htmlFor="emergencycontact">Emergency Contact:</label>
               <input
                 type="tel"
-                id="emergencyContact"
-                name="emergencyContact"
-                value={formData.emergencyContact}
-                onChange={handleChange}
+                id="emergencycontact"
+                name="emergencycontact"
+                value={emergencycontact}
+                onChange={handleEmergencycontact}
               />
             </FormField>
           </PageContainer>
@@ -175,44 +289,47 @@ const AddTenant = () => {
             <PageContainer>
             <PageTitle>Identification</PageTitle>
             <FormField>
-              <label htmlFor="idType">ID Type:</label>
+              <label htmlFor="idtype">ID Type:</label>
+              <select
+                id="idtype"
+                name="idtype"
+                value={idtype}
+                onChange={handleIdtype}
+              >
+                <option value="">Select</option>
+                <option value="nationalid">National ID</option>
+                <option value="passport">Passport</option>
+                <option value="militaryid">Military ID</option>
+              </select>
+            </FormField>
+            <FormField>
+              <label htmlFor="idnumber">ID Number:</label>
               <input
                 type="text"
-                id="idType"
-                name="idType"
-                value={formData.idType}
-                onChange={handleChange}
+                id="idnumber"
+                name="idnumber"
+                value={idnumber}
+                onChange={handleIdnumber}
               />
             </FormField>
             <FormField>
-              <label htmlFor="idNumber">ID Number:</label>
-              <input
-                type="text"
-                id="idNumber"
-                name="idNumber"
-                value={formData.idNumber}
-                onChange={handleChange}
-              />
-            </FormField>
-            <FormField>
-              <label htmlFor="idExpiryDate">ID Expiry Date:</label>
+              <label htmlFor="idexpirydate">ID Expiry Date:</label>
               <input
                 type="date"
-                id="idExpiryDate"
-                name="idExpiryDate"
-                value={formData.idExpiryDate}
-                onChange={handleChange}
+                id="idexpirydate"
+                name="idexpirydate"
+                value={idexpirydate}
+                onChange={handleIdexpirydate}
               />
             </FormField>
             <FormField>
-              <label htmlFor="idAttachment">ID Attachment:</label>
-              <input
-                type="file"
-                id="idAttachment"
-                name="idAttachment"
-                value={formData.idAttachment}
-                onChange={handleFile}
-              />
+                <label htmlFor="idattachment">ID Attachment:</label>
+                <input
+                    type="file"
+                    id="idattachment"
+                    name="idattachment"
+                    onChange={handleIdattachment}
+                />
             </FormField>
           </PageContainer>
         );
@@ -226,28 +343,28 @@ const AddTenant = () => {
                 type="tel"
                 id="employer"
                 name="employer"
-                value={formData.employer}
-                onChange={handleChange}
+                value={employer}
+                onChange={handleEmployer}
               />
             </FormField>
             <FormField>
-              <label htmlFor="jobTitle">Job Title:</label>
+              <label htmlFor="jobtitle">Job Title:</label>
               <input
                 type="text"
-                id="jobTitle"
-                name="jobTitle"
-                value={formData.jobTitle}
-                onChange={handleChange}
+                id="jobtitle"
+                name="jobtitle"
+                value={jobtitle}
+                onChange={handleJobtitle}
               />
             </FormField>
             <FormField>
-              <label htmlFor="monthlyIncome">Monthly Income:</label>
+              <label htmlFor="monthlyincome">Monthly Income:</label>
               <input
                 type="number"
-                id="monthlyIncome"
-                name="monthlyIncome"
-                value={formData.monthlyIncome}
-                onChange={handleChange}
+                id="monthlyincome"
+                name="monthlyincome"
+                value={monthlyincome}
+                onChange={handleMonthlyincome}
               />
             </FormField>
           </PageContainer>
@@ -257,23 +374,23 @@ const AddTenant = () => {
             <PageContainer>
             <PageTitle>References</PageTitle>
             <FormField>
-              <label htmlFor="personalReference">Personal Reference's Contact:</label>
+              <label htmlFor="personalreference">Personal Reference's Contact:</label>
               <input
                 type="tel"
-                id="personalReference"
-                name="personalReference"
-                value={formData.personalReference}
-                onChange={handleChange}
+                id="personalreference"
+                name="personalreference"
+                value={personalreference}
+                onChange={handlePersonalreference}
               />
             </FormField>
             <FormField>
-              <label htmlFor="previousLandlord">Previous Landlord's Contact:</label>
+              <label htmlFor="previouslandlord">Previous Landlord's Contact:</label>
               <input
                 type="tel"
-                id="previousLandlord"
-                name="previousLandlord"
-                value={formData.previousLandlord}
-                onChange={handleChange}
+                id="previouslandlord"
+                name="previouslandlord"
+                value={previouslandlord}
+                onChange={handlePreviouslandlord}
               />
             </FormField>
           </PageContainer>
@@ -283,43 +400,43 @@ const AddTenant = () => {
             <PageContainer>
             <PageTitle>Lease Details</PageTitle>
             <FormField>
-              <label htmlFor="leaseStartDate">Lease Start Date:</label>
+              <label htmlFor="leasestartdate">Lease Start Date:</label>
               <input
                 type="date"
-                id="leaseStartDate"
-                name="leaseStartDate"
-                value={formData.leaseStartDate}
-                onChange={handleChange}
+                id="leasestartdate"
+                name="leasestartdate"
+                value={leasestartdate}
+                onChange={handleLeasestartdate}
               />
             </FormField>
             <FormField>
-              <label htmlFor="leaseEndDate">Lease End Date:</label>
+              <label htmlFor="leaseenddate">Lease End Date:</label>
               <input
                 type="date"
-                id="leaseEndDate"
-                name="leaseEndDate"
-                value={formData.leaseEndDate}
-                onChange={handleChange}
+                id="leaseenddate"
+                name="leaseenddate"
+                value={leaseenddate}
+                onChange={handleLeaseenddate}
               />
             </FormField>
             <FormField>
-              <label htmlFor="rentAmount">Rent Amount:</label>
+              <label htmlFor="rentamount">Rent Amount:</label>
               <input
                 type="number"
-                id="rentAmount"
-                name="rentAmount"
-                value={formData.rentAmount}
-                onChange={handleChange}
+                id="rentamount"
+                name="rentamount"
+                value={rentamount}
+                onChange={handleRentamount}
               />
             </FormField>
             <FormField>
-              <label htmlFor="securityDeposit">Security Deposit:</label>
+              <label htmlFor="securitydeposit">Security Deposit:</label>
               <input
                 type="number"
-                id="securityDeposit"
-                name="securityDeposit"
-                value={formData.securityDeposit}
-                onChange={handleChange}
+                id="securitydeposit"
+                name="securitydeposit"
+                value={securitydeposit}
+                onChange={handleSecuritydeposit}
               />
             </FormField>
           </PageContainer>
@@ -329,13 +446,13 @@ const AddTenant = () => {
           <PageContainer>
             <PageTitle>Additional Notes</PageTitle>
             <FormField>
-              <label htmlFor="additionalNotes">Additional Notes:</label>
+              <label htmlFor="additionalnotes">Additional Notes:</label>
               <TextArea
-                id="additionalNotes"
-                name="additionalNotes"
+                id="additionalnotes"
+                name="additionalnotes"
                 placeholder="Additional Notes e.g. Special Requirements, Preferences or Important Considerations.&#10;If no additional Notes, indicate: No additional Note."
-                value={formData.additionalNotes}
-                onChange={handleChange}
+                value={additionalnotes}
+                onChange={handleAdditionalnotes}
                 rows={10} // Adjust the number of rows to fit your desired height
     />
             </FormField>
@@ -349,14 +466,14 @@ const AddTenant = () => {
   return (
     <FormContainer>
       <FormTitle>Add Tenant</FormTitle>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} encType="multipart/form-data">
         {renderForm()}
         <ButtonsContainer>
           {currentPage > 1 && (
             <Button onClick={prevPage} style={{marginRight: "265px"}}>Previous</Button>
           )}
           {currentPage < 7 ? (
-            <Button type="submit" onClick={nextPage}>Next</Button>
+            <Button onClick={nextPage}>Next</Button>
           ) : (
             <Button type="submit">Submit</Button>
           )}
@@ -427,3 +544,68 @@ const TextArea = styled.textarea`
 `;
 
 export default AddTenant;
+
+
+//   const [formData, setFormData] = useState({
+//     fullname: "",
+//     dob: "",
+//     gender: "",
+//     Krapin: "",
+//     nationality: "",
+//     phonenumber: "",
+//     emailaddress: "",
+//     currentaddress: "",
+//     emergencycontact: "",
+//     idtype: "",
+//     idnumber: "",
+//     idexpirydate: "",
+//     idattachment: "",
+//     employer: "",
+//     jobtitle: "",
+//     monthlyincome: "",
+//     personalreference: "",
+//     previouslandlord: "",
+//     leasestartdate: "",
+//     leaseenddate: "",
+//     rentamount: "",
+//     securitydeposit: "",
+//     additionalnotes: ""
+//   });
+
+// {isSelected ? (
+//   <div>
+//     <p>Filename: {idattachment.name}</p>
+//     <p>Filetype: {idattachment.type}</p>
+//     <p>Size in bytes: {idattachment.size}</p>
+//     <p>
+//       lastModifiedDate:{' '}
+//       {idattachment.lastModifiedDate.toLocaleDateString()}
+//     </p>
+//   </div>
+// ) : (
+//   <p>Select a file to show details</p>
+// )}
+
+
+        // if (e.target.files) {
+        //     const file = e.target.files[0];
+        //     // Uploading the file using the fetch API to the server
+        //     fetch('/tenants', {
+        //       method: 'POST',
+        //       body: file,
+        //       headers: {
+        //         'content-type': file.type,
+        //         'content-length': `${file.size}`,
+        //       },
+        //     })
+        //       .then((res) => res.json())
+        //       .then((data) => {
+        //         console.log(data);
+        //         setIdattachment(data);
+        //         setIsSelected(true);
+        //         // Once the image is submitted, you can proceed to submit the rest of the form data
+        //         // nextPage();
+        //       })
+        //       .catch((err) => console.error(err));
+        //   }
+
