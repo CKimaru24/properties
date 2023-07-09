@@ -25,7 +25,7 @@ const TenantLayoutSettings = ({children}) => {
         <h1 style={{marginBottom: "20px", fontSize: "22px", color: "purple"}}><MdHome /> SmartRentals</h1>
         <Section>
           <SectionTitle>LIST</SectionTitle>
-          <NavLink>
+          <NavLink to="/tenants">
             <FaListAlt />
             Tenant List
           </NavLink>

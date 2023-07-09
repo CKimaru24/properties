@@ -39,6 +39,9 @@ import OtherDocuments from './components/OtherDocuments';
 import MaintenanceRequest from './components/MaintenanceRequest';
 import ApartmentsManagers from './components/ApartmentsManagers';
 import AddManager from './components/AddManager';
+import PropertyManager from './components/PropertyManager';
+import Tenants from './components/Tenants';
+import Tenant from './components/Tenant';
 
 
 function App() {
@@ -92,6 +95,8 @@ function App() {
         <Route path="/listings" element={<LayoutSettings><Listings /></LayoutSettings>} />
         <Route path="/listing/:id" element={<LayoutSettings><Listing /></LayoutSettings>}/>
         <Route path="/addManager" element={<LayoutSettings><AddManager /></LayoutSettings>} />
+        <Route path="/manager/:id" element={<LayoutSettings><PropertyManager /></LayoutSettings>} />
+        <Route path="/tenant/:id" element={<LayoutSettings><Tenant /></LayoutSettings>} />
         <Route path="/apartmentsManagers" element={<LayoutSettings><ApartmentsManagers /></LayoutSettings>} />
         <Route path="/booking" element={<LayoutSettings><Booking /></LayoutSettings>}/>
         <Route path="/sliding" element={<LayoutSettings><Sliding /> </LayoutSettings> } />
@@ -100,6 +105,7 @@ function App() {
         <Route path="/profile" element={<LayoutSettings><Profile /></LayoutSettings>} />
         <Route path="/landlordTenants" element={<TenantLayoutSettings><LandlordTenants/></TenantLayoutSettings>} />
         <Route path="/addTenants" element={<TenantLayoutSettings><AddTenants /></TenantLayoutSettings>} />
+        <Route path="/tenants" element={<TenantLayoutSettings><Tenants /></TenantLayoutSettings>} />
         <Route path="/leaseAgreement" element={<TenantLayoutSettings><LeaseAgreement /></TenantLayoutSettings>} />
         <Route path="/otherDocuments" element={<TenantLayoutSettings><OtherDocuments /></TenantLayoutSettings>} />
         <Route path="/maintenaceRequest" element={<TenantLayoutSettings><MaintenanceRequest /></TenantLayoutSettings>} />

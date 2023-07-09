@@ -61,17 +61,17 @@ const Arrow = styled(IoMdArrowRoundForward)`
   margin-left: 0.5rem;
 `;
 
-const ApartmentsManagers = () => {
-  const [managers, setManagers] = useState([]);
+const Tenants = () => {
+  const [tenants, setTenants] = useState([]);
 
   useEffect(() => {
-    fetch('/managers')
+    fetch('/tenants')
       .then((response) => response.json())
       .then((data) => {
-        setManagers(data);
+        setTenants(data);
       })
       .catch((error) => {
-        console.error('Error fetching apartment managers:', error);
+        console.error('Error fetching tenants:', error);
       });
   }, []);
 
@@ -80,17 +80,17 @@ const ApartmentsManagers = () => {
     <Topbar/>
 
     <Header>
-        <NavLink to="/addManager">
+        <NavLink to="/addTenants">
         <AiOutlinePlus />
-        Add Property Manager
+        Add A Tenant
         </NavLink>
-        <NavLink to="/apartmentsManagers">
+        <NavLink to="/tenants">
         <AiOutlineEye />
-        View All Property Managers
+        View All Tenants
         </NavLink>
     </Header>
     <div>
-      <h2>Apartment Managers</h2>
+      <h2>Tenants</h2>
       <Table>
         <thead>
           <tr>
@@ -103,15 +103,15 @@ const ApartmentsManagers = () => {
           </tr>
         </thead>
         <tbody>
-          {managers.map((manager) => (
-            <TableRow key={manager.id}>
-              <TableCell>{manager.id}</TableCell>
-              <TableCell>{manager.fullname}</TableCell>
-              <TableCell>{manager.propertyname}</TableCell>
-              <TableCell>{manager.phonenumber}</TableCell>
-              <TableCell>{manager.emailaddress}</TableCell>
+          {tenants.map((tenant) => (
+            <TableRow key={tenant.id}>
+              <TableCell>{tenant.id}</TableCell>
+              <TableCell>{tenant.fullname}</TableCell>
+              <TableCell>{tenant.propertyname}</TableCell>
+              <TableCell>{tenant.phonenumber}</TableCell>
+              <TableCell>{tenant.emailaddress}</TableCell>
               <TableCell>
-                <Button as={Link} to={`/manager/${manager.id}`}  primary="true" css={`max-width: 160px;`}>
+                <Button as={Link} to={`/tenant/${tenant.id}`}  primary="true" css={`max-width: 160px;`}>
                     <Arrow />
                     View Details
                 </Button>
@@ -125,7 +125,7 @@ const ApartmentsManagers = () => {
   );
 };
 
-export default ApartmentsManagers;
+export default Tenants;
 
 // import React from 'react';
 // import styled from 'styled-components';

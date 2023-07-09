@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import { IoMdArrowBack, IoMdArrowForward, IoMdArrowRoundForward } from 'react-icons/io';
 
 const AddTenant = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +22,7 @@ const AddTenant = () => {
     const [idtype, setIdtype] = useState('');
     const [idnumber, setIdnumber] = useState('');
     const [idexpirydate, setIdexpirydate] = useState('');
-    const [idattachment, setIdattachment] = useState(null);
+    const [idattachment, setIdattachment] = useState([]);
     const [employer, setEmployer] = useState('');
     const [jobtitle, setJobtitle] = useState('');
     const [monthlyincome, setMonthlyincome] = useState('');
@@ -31,6 +33,44 @@ const AddTenant = () => {
     const [rentamount, setRentamount] = useState('');
     const [securitydeposit, setSecuritydeposit] = useState('');
     const [additionalnotes, setAdditionalnotes] = useState('');
+    const [propertyname, setPropertyname] = useState('');
+
+    const [selectedListingId, setSelectedListingId] = useState('');
+    const [selectedListingName, setSelectedListingName] = useState('');
+
+    const [formReady, setFormReady] = useState(false);
+
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+
+    const [loading, setLoading] = useState(false);
+
+    const resetTenant = () => {
+      setFullname('');
+      setDob('');
+      setGender('');
+      setKrapin('');
+      setNationality("");
+      setPhonenumber("");
+      setEmailaddress("");
+      setCurrentaddress('');
+      setemergencycontact('');
+      setIdtype('');
+      setIdnumber('');
+      setIdexpirydate("");
+      setIdattachment("");
+      setEmployer("");
+      setJobtitle('');
+      setMonthlyincome('');
+      setPersonalreference('');
+      setPreviouslandlord('');
+      setLeasestartdate("");
+      setLeaseenddate("");
+      setRentamount("");
+      setSecuritydeposit("");
+      setAdditionalnotes("");
+      setPropertyname("");
+      // setPhoneError("");
+    };
 
   const handleFullname = (e) => {
     setFullname(e.target.value);
@@ -99,13 +139,64 @@ const AddTenant = () => {
   const handleAdditionalnotes = (e) => {
     setAdditionalnotes(e.target.value);
   };
-  const handleIdattachment = (e) => {
-    setIdattachment(e.target.value);
+
+  // Update the handlePropertyname function to store the selected listing ID and name
+  const handlePropertyname = (event) => {
+    const selectedProperty = properties.find((property) => property.name === event.target.value);
+    if (selectedProperty) {
+      setSelectedListingId(selectedProperty.id);
+      setPropertyname(selectedProperty.name);
+    } else {
+      setSelectedListingId(''); // Set the selectedListingId to empty if no property is found
+      setPropertyname(''); // Set the propertyname to empty if no property is found
+    }
   };
-  const handleAttachment = (e) => {
-    const selectedFile = e.target.files[0];
-    setIdattachment(selectedFile);
-    setIsSelected(true);
+  
+  
+  const [properties, setProperties] = useState([]); // State variable to store the property data
+
+  // Fetch property data from the backend when the component mounts
+  useEffect(() => {
+    fetch("/listings")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the properties state variable with the fetched data
+        setProperties(data);
+        console.log(properties)
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching property data", error);
+      });
+  }, []);
+
+  const preset_key = "maintenance";
+
+  const handleIdattachment = async event => {
+    const file = event.target.files[0];
+    console.log(file)
+    const formData = new FormData();;
+    formData.append('file', file);
+    formData.append('upload_preset', preset_key);
+    setLoading(true);
+
+    const res = await fetch("https://api.cloudinary.com/v1_1/djiqwujg4/image/upload", 
+    {
+      method: 'POST',
+      body: formData
+    })
+
+    const uploadedFile = await res.json();
+    console.log(uploadedFile); 
+    const { secure_url, original_filename } = uploadedFile;
+    const newImage = { url: secure_url, name: original_filename };
+    
+    setIdattachment((prevImages) => [...prevImages, newImage]);
+    setLoading(false);
+  }
+
+  const handleDeleteImage = (index) => {
+    // Remove the image at the given index from the images array
+    setIdattachment((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   const nextPage = () => {
@@ -119,53 +210,185 @@ const AddTenant = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const tenantData = {
-        fullname,
-        dob,
-        gender,
-        Krapin,
-        nationality,
-        phonenumber,
-        emailaddress,
-        currentaddress,
-        emergencycontact,
-        idtype,
-        idnumber,
-        idexpirydate,
-        idattachment,
-        employer,
-        jobtitle,
-        monthlyincome,
-        personalreference,
-        previouslandlord,
-        leasestartdate,
-        leaseenddate,
-        rentamount,
-        securitydeposit,
-        additionalnotes,
-    };
+    let formValid = true;
+
+    if (currentPage === 1) {
+      if (!fullname) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!dob) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!gender) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!Krapin) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!nationality) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+    } else if (currentPage === 2) {
+      // Validation logic for fields in page 2
+      if (!phonenumber) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!emailaddress) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!currentaddress) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!emergencycontact) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+    } else if (currentPage === 3) {
+      // Validation logic for fields in page 3
+      if (!idtype) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!idnumber) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!idexpirydate) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!idattachment) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+    } else if (currentPage === 4) {
+      // Validation logic for fields in page 4
+      if (!employer) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!jobtitle) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!monthlyincome) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+    } else if (currentPage === 5) {
+      // Validation logic for fields in page 5
+      if (!personalreference) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!previouslandlord) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+    } else if (currentPage === 6) {
+      // Validation logic for fields in page 6
+      if (!leasestartdate) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!leaseenddate) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!rentamount) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+      if (!securitydeposit) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+    } else if (currentPage === 7) {
+      // Validation logic for fields in page 7
+      if (!additionalnotes) {
+        // Display an error message or perform necessary actions for invalid field
+        formValid = false;
+      }
+    }
+
+    // Set formReady based on formValid
+    const formReady = formValid;
     
-    fetch('/tenants', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(tenantData)
-      })
-      .then(response => {
-        if (response.ok) {
-          console.log('Tenant data submitted successfully');
-          // Reset the form or perform any other actions
-        } else {
-          console.error('Failed to submit tenant data');
+    const tenantData = {
+      fullname,
+      dob,
+      gender,
+      Krapin,
+      nationality,
+      phonenumber,
+      emailaddress,
+      currentaddress,
+      emergencycontact,
+      idtype,
+      idnumber,
+      idexpirydate,
+      idattachment,
+      employer,
+      jobtitle,
+      monthlyincome,
+      personalreference,
+      previouslandlord,
+      leasestartdate,
+      leaseenddate,
+      rentamount,
+      securitydeposit,
+      additionalnotes,
+      propertyname,
+      listing_id: selectedListingId,
+    };
+
+    console.log("Token:", localStorage.getItem("token"));
+    console.log(selectedListingId)
+
+    
+    if (formReady) {
+      fetch('/tenants', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token")}`, // Retrieve the token from local storage
+          },
+          body: JSON.stringify(tenantData)
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('Tenant data submitted successfully');
+            console.log(response)
+            console.log(localStorage.getItem("token"));
+
+            setSubmitSuccess(true);
+            // Reset the form or perform any other actions
+            // resetTenant()
+          } else {
+            console.error('Failed to submit tenant data');
+            // Handle the error
+          }
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error occurred while submitting tenant data', error);
           // Handle the error
-        }
-      })
-      .catch(error => {
-        console.error('Error occurred while submitting tenant data', error);
-        // Handle the error
-      });
+          setLoading(false);
+        });
+      } else {
+        // Display an error message or perform necessary actions for invalid form
+        setLoading(false);
+      }
   };
 
 //   const handleFormSubmit = (e) => {
@@ -328,9 +551,21 @@ const AddTenant = () => {
                     type="file"
                     id="idattachment"
                     name="idattachment"
-                    onChange={handleIdattachment}
+                    multiple onChange={handleIdattachment}
                 />
+
+                <button variant="primary" type="submit" disabled={loading} >
+                  {loading ? "Loading..." : "Upload"}
+                </button>
             </FormField>
+            <AttachmentsList>
+                {idattachment.map((image, index) => (
+                <AttachmentItem key={index}>
+                    {image.name}
+                    <button onClick={() => handleDeleteImage(index)} style={{margin: "10px"}}>Delete</button>
+                </AttachmentItem>
+                ))}
+            </AttachmentsList>
           </PageContainer>
         );
       case 4:
@@ -454,10 +689,28 @@ const AddTenant = () => {
                 value={additionalnotes}
                 onChange={handleAdditionalnotes}
                 rows={10} // Adjust the number of rows to fit your desired height
-    />
+              />
             </FormField>
+
           </PageContainer>
         );
+        case 8:
+          return (
+            <PageContainer>
+              <PageTitle>Allocate the Tenant to a property</PageTitle>
+                <FormField>
+                  <label htmlFor="propertyname">Property Name:</label>
+                  <Select id="propertyname" value={propertyname} onChange={handlePropertyname}>
+                    <option value="">-- Select Property --</option>
+                    {properties.map((property) => (
+                      <option key={property.id} value={property.name}>{property.name}</option>
+                    ))}
+                  </Select>
+                </FormField>
+
+  
+            </PageContainer>
+          );
       default:
         return null;
     }
@@ -467,20 +720,32 @@ const AddTenant = () => {
     <FormContainer>
       <FormTitle>Add Tenant</FormTitle>
       <Form onSubmit={handleSubmit} encType="multipart/form-data">
+        {submitSuccess && (
+          <SuccessMessage>Your Booking has been submitted successfully!</SuccessMessage>
+        )}
         {renderForm()}
         <ButtonsContainer>
-          {currentPage > 1 && (
-            <Button onClick={prevPage} style={{marginRight: "265px"}}>Previous</Button>
-          )}
-          {currentPage < 7 ? (
-            <Button onClick={nextPage}>Next</Button>
-          ) : (
-            <Button type="submit">Submit</Button>
-          )}
+        {currentPage > 1 && (
+        <Button type="button" onClick={prevPage} style={{marginRight: "265px"}}>
+          Previous
+        </Button>
+      )}
+      {currentPage < 8 && (
+        <Button type="button" onClick={nextPage} disabled={loading}>
+          Next
+        </Button>
+      )}
+      {currentPage === 8 && (
+        <Button type="submit" disabled={loading}>
+          Submit
+        </Button>
+      )}
+      {/* {loading && <p>Loading...</p>} */}
         </ButtonsContainer>
       </Form>
     </FormContainer>
   );
+  
 };
 
 // Styled Components
@@ -541,6 +806,89 @@ const TextArea = styled.textarea`
   border: 1px solid #ccc;
   border-radius: 4px;
 //   height: 150px; /* Remove the double quotes */
+`;
+
+const AttachmentsList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 8px;
+`;
+
+const AttachmentItem = styled.li`
+  font-size: 14px;
+  color: #777;
+`;
+
+const SuccessMessage = styled.p`
+  color: green;
+  margin-top: 1rem;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  margin-top: 0.1rem;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+const TableHeader = styled.th`
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+`;
+
+const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+`;
+
+const TableCell = styled.td`
+  padding: 12px;
+`;
+
+const ViewDetailsButton = styled.button`
+  padding: 8px 16px;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+`;
+
+const NavLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+
+  svg {
+    margin-right: 10px;
+  }
+
+  &.active {
+    font-weight: bold;
+    color: #ff0000;
+  }
+`;
+
+const Arrow = styled(IoMdArrowRoundForward)`
+  margin-left: 0.5rem;
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
 `;
 
 export default AddTenant;

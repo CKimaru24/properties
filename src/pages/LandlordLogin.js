@@ -65,6 +65,8 @@ const LandlordLogin = () => {
 
   const navigate = useNavigate();
 
+  const jwtToken = localStorage.getItem('jwtToken');
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -73,6 +75,7 @@ const LandlordLogin = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwtToken}`
       },
       body: JSON.stringify({ email, password }),
     })

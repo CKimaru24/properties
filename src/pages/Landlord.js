@@ -302,31 +302,45 @@ const Landlord = ({ setLandlord }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Perform validation and submit the signup data
-    if (password !== passwordConfirmation) {
-      setPasswordConfirmationError("Passwords do not match");
-      return;
-    } else {
-      setPasswordConfirmationError("");
-    }
-
     // Check if any required fields are empty
     if (!fname) {
       setFnameError("Please enter your first name");
     } else if (!/^[A-Za-z]+$/.test(fname)) {
-        setFnameError("Name should contain letters only");
-      } else {
+      setFnameError("Name should contain letters only");
+    } else {
       setFnameError("");
     }
     
 
     if (!lname) {
-        setLnameError("Please enter your last name");
-      } else if (!/^[A-Za-z]+$/.test(lname)) {
-        setLnameError("Name should contain letters only");
-        } else {
-        setLnameError("");
-      }
+      setLnameError("Please enter your last name");
+    } else if (!/^[A-Za-z]+$/.test(lname)) {
+      setLnameError("Name should contain letters only");
+      } else {
+      setLnameError("");
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Please enter an email address");
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Invalid email format");
+    } else {
+      setEmailError("");
+    }
+
+    // Validate phone number format
+    const phoneRegex = /^0\d{9}$/; // Assuming a 10-digit phone number starting with 0
+
+    if (!phone) {
+      setPhoneError("Please enter a phone number");
+    } else if (!phoneRegex.test(phone)) {
+      setPhoneError("Invalid phone number format");
+    return;
+    } else {
+      setPhoneError("");
+    }
 
     if (!password) {
       setPasswordError("Please enter a password");
@@ -340,27 +354,16 @@ const Landlord = ({ setLandlord }) => {
       setPasswordConfirmationError("");
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) {
-    setEmailError("Please enter an email address");
-    } else if (!emailRegex.test(email)) {
-    setEmailError("Invalid email format");
+
+    // Perform validation and submit the signup data
+    if (password !== passwordConfirmation) {
+      setPasswordConfirmationError("Passwords do not match");
+      return;
     } else {
-    setEmailError("");
+      setPasswordConfirmationError("");
     }
 
-    // Validate phone number format
-    const phoneRegex = /^0\d{9}$/; // Assuming a 10-digit phone number starting with 0
-
-    if (!phone) {
-    setPhoneError("Please enter a phone number");
-    } else if (!phoneRegex.test(phone)) {
-    setPhoneError("Invalid phone number format");
-    return;
-    } else {
-    setPhoneError("");
-    }
+    
 
     // Perform additional validations as needed
 
@@ -412,10 +415,13 @@ const Landlord = ({ setLandlord }) => {
     //     .catch((error) => {
     //         console.log(error.message);
     //     });
-    fetch("/signup", {
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    fetch("/landlords", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Authorization': `Bearer ${jwtToken}`
       },
       body: JSON.stringify({
         fname,

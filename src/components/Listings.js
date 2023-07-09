@@ -345,7 +345,7 @@ const Listings = () => {
 
   return (
     <>
-    <H1>LISTINGS</H1>
+    <H1 style={{marginBottom: "30px"}}>LISTINGS</H1>
     <Container>
       {listings.map((listing, index) => (
         <ListingCard key={index}>

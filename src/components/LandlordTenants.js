@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components/macro';
 import { IoMdArrowBack, IoMdArrowForward, IoMdArrowRoundForward } from 'react-icons/io';
 import { useNavigate } from "react-router-dom";
+import { Button } from './Button';
 
 const LandlordTenants = () => {
-    const [properties, setTenants] = useState([]);
+    const [tenants, setTenants] = useState([]);
 
     const navigate = useNavigate();
 
@@ -101,73 +102,47 @@ const LandlordTenants = () => {
             <AiOutlinePlus />
             Add Tenant
           </NavLink>
-          <NavLink to="/listings">
+          <NavLink to="/tenants">
             <AiOutlineEye />
             View All Tenants
           </NavLink>
         </Header>
         <Body>
-          {properties.map((property) => (
-            <Card key={property.id}>
-              <ApartmentName>{property.name}</ApartmentName>
-              <Location>{property.location}</Location>
-              <PropertyInfo>
-                <Icon>
-                  <FaBed />
-                </Icon>
-                <Info>Beds: {property.beds}</Info>
-              </PropertyInfo>
-              <PropertyInfo>
-                <Icon>
-                  <FaCreditCard />
-                </Icon>
-                <Info>Price: ${property.price}</Info>
-              </PropertyInfo>
-              <PropertyInfo>
-                <Icon>
-                  <FaFilePdf />
-                </Icon>
-                <Info>
-                  Floor Plan:{" "}
-                  <PdfLink href={property.floorPlan}>View</PdfLink>
-                </Info>
-              </PropertyInfo>
-              <Links>
-                <Link>ENQUIRIES</Link>
-                <Link>DETAILS</Link>
-              </Links>
-            </Card>
-          ))}
+          {/*  */}
         </Body>
       </Container>
-      <Container style={{marginLeft: "15%"}}>
-        {listings.map((listing, index) => (
-          <ListingCard key={index}>
-            <ListingContent>
-              <ListingTitle>{listing.name}</ListingTitle>
-              <p>{listing.listingType}</p>
-              <ListingPrice>Ksh {listing.priceFrom}</ListingPrice>
-              <p>Location: {listing.town}</p>
-              <Button as={Link} to={`/listing/${listing.id}`}  primary="true" css={`max-width: 160px;`}>
-                {listing.label}
-                <Arrow />
-                View Details
-              </Button>
-            </ListingContent>
-            <ListingImages>
-              <Slider activeIndex={activeImageIndex[index]}>
-                {listing.images.map((image, imageIndex) => (
-                  <ListingImage key={imageIndex} src={image.url} alt={image.name} />
-                ))}
-              </Slider>
-              <SliderButtons>
-                <PrevArrow onClick={() => prevSlide(index)} style={{marginRight: "181px"}}/>
-                <NextArrow onClick={() => nextSlide(index)} />
-              </SliderButtons>
-            </ListingImages>
-          </ListingCard>
-        ))}
-      </Container>
+      <div>
+        <h2>Tenants</h2>
+        <Table>
+          <thead>
+            <tr>
+              <TableHeader>Id</TableHeader>
+              <TableHeader>Name</TableHeader>
+              <TableHeader>Apartment's Name</TableHeader>
+              <TableHeader>Phone Number</TableHeader>
+              <TableHeader>Email</TableHeader>
+              <TableHeader>Actions</TableHeader>
+            </tr>
+          </thead>
+          <tbody>
+            {tenants.map((tenant) => (
+              <TableRow key={tenant.id}>
+                <TableCell>{tenant.id}</TableCell>
+                <TableCell>{tenant.fullname}</TableCell>
+                <TableCell>{tenant.propertyname}</TableCell>
+                <TableCell>{tenant.phonenumber}</TableCell>
+                <TableCell>{tenant.emailaddress}</TableCell>
+                <TableCell>
+                  <Button as={Link} to={`/tenant/${tenant.id}`}  primary="true" css={`max-width: 160px;`}>
+                      <Arrow />
+                      View Details
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </tbody>
+        </Table>
+      </div>
       <BottomRightButton onClick={handleBackClick}>
         <FiArrowLeft />
         Back
@@ -189,18 +164,18 @@ const Header = styled.div`
   margin-bottom: 20px;
 `;
 
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border: none;
-  background-color: #f1f1f1;
-  cursor: pointer;
+// const Button = styled.button`
+//   display: flex;
+//   align-items: center;
+//   padding: 10px;
+//   border: none;
+//   background-color: #f1f1f1;
+//   cursor: pointer;
 
-  svg {
-    margin-right: 5px;
-  }
-`;
+//   svg {
+//     margin-right: 5px;
+//   }
+// `;
 
 const Body = styled.div`
   display: grid;
@@ -377,5 +352,31 @@ const BottomRightButton = styled.button`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 `;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+const TableHeader = styled.th`
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+`;
+
+const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+`;
+
+const TableCell = styled.td`
+  padding: 12px;
+`;
+
+const ViewDetailsButton = styled.button`
+  padding: 8px 16px;
+`;
+
 
 export default LandlordTenants;
