@@ -42,6 +42,7 @@ import AddManager from './components/AddManager';
 import PropertyManager from './components/PropertyManager';
 import Tenants from './components/Tenants';
 import Tenant from './components/Tenant';
+import AddAgent from './components/AddAgent'
 
 
 function App() {
@@ -106,6 +107,7 @@ function App() {
         <Route path="/landlordTenants" element={<TenantLayoutSettings><LandlordTenants/></TenantLayoutSettings>} />
         <Route path="/addTenants" element={<TenantLayoutSettings><AddTenants /></TenantLayoutSettings>} />
         <Route path="/tenants" element={<TenantLayoutSettings><Tenants /></TenantLayoutSettings>} />
+        <Route path="/addAgent" element={<LayoutSettings><AddAgent /></LayoutSettings>} />
         <Route path="/leaseAgreement" element={<TenantLayoutSettings><LeaseAgreement /></TenantLayoutSettings>} />
         <Route path="/otherDocuments" element={<TenantLayoutSettings><OtherDocuments /></TenantLayoutSettings>} />
         <Route path="/maintenaceRequest" element={<TenantLayoutSettings><MaintenanceRequest /></TenantLayoutSettings>} />

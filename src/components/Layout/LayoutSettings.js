@@ -56,7 +56,7 @@ const LayoutSettings = ({children}) => {
             <FaBuilding />
             Apartments Managers
           </NavLink>
-          <NavLink>
+          <NavLink to="/addAgent">
             <FaUserFriends />
             Agents
           </NavLink>
